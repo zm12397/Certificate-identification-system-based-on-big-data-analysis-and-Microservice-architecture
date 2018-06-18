@@ -1,0 +1,108 @@
+body{
+	background-image: url(../img/login-background.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+#title{
+	width: 100%;
+	height: 70px;
+	line-height: 70px;
+	border-bottom: 1px solid #DADFE8; 
+	text-align: center;
+	color: #2AB8BD;
+}
+#title #t1{
+	font-size: 20px;
+	font-family:Î¢ÈíÑÅºÚ;
+}
+#title #t2{
+	font-size: 16px;
+	text-align: left;
+	border-left: 1px solid #DADFE8;
+}
+#title .btn{
+	border-radius: 0px;
+	border: 2px solid #1E8EC5;
+	background-color: white;
+	
+}
+#title .btn:hover{
+	background-color:  #1E8EC5;
+	color: white;
+}
+#content{
+	width: 100%;
+	height: 550px;
+}
+#content #img{
+	width: 400px;
+	margin: 0 auto;
+}
+#content #img img{
+	width: 400px;
+}
+#content #main{
+	width: 400px;
+	margin: 0 auto;
+	background: white;
+	padding: 40px 60px;
+	border: 1px solid #D9E0EC;
+}
+/* #content #main .tab div{
+	font-size: 1.1em;
+	background: white;
+	text-align: center;
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 1px solid #DADFE8;
+}
+#content #main .tab div:hover{
+	cursor: pointer;
+}
+#content #main .tab div.selected{
+	color: #5182E4;
+	border-bottom: 1px solid #5182E4;
+} */
+#content #main label{
+	color: #2AB8BD;
+	font-size: 0.9em;
+	display: none;
+	/* text-indent: 1em; */
+}
+#content #main input{
+	padding-left: 0px;
+	border: none;
+	box-shadow: none;
+	border-bottom: 1px solid #97B4EF;
+}
+#content #main #pfather{
+	position: relative;
+}
+#content #main #forget{
+	position: absolute;
+	bottom: 7px;
+	right: 1px;
+	color: #1E8EC5;
+}
+#content #main button{
+	font-size: 1.1em;
+	font-family: "å¾®è½¯é›…é»‘";
+	width: 100%;
+	background: #1E8EC5;
+	border-radius: 0;
+	border:2px solid #1E8EC5;
+	color: white;
+}
+#content #main button:hover{
+	background: white;
+	color: #1E8EC5;
+}
+#vc div.col-xs-4{
+	padding-top:20px;
+}
+#vc{
+	margin-bottom:30px;
+}
+#l-validate{
+	display:none;
+}

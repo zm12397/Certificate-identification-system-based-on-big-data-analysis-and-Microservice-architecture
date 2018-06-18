@@ -1,0 +1,70 @@
+#配置模板
+#https://docs.spring.io/spring-boot/docs/1.4.0.RELEASE/reference/html/common-application-properties.html
+spring:
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 3MB
+      max-request-size: 3MB
+  #模板配置
+  thymeleaf:
+    #开发时一定关闭，否则调试困难
+    cache: false
+    prefix: classpath:/static/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+  #数据源配置
+  datasource:
+    druid:
+      write:
+        url: jdbc:mysql://localhost:3306/gleaning?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        username: root
+        password: root
+        driver-class-name: com.mysql.jdbc.Driver
+      read:
+        url: jdbc:mysql://localhost:3307/gleaning?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        username: root
+        password: 
+        driver-class-name: com.mysql.jdbc.Driver
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/gleaning?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+#    username: root
+#    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    database: mysql
+#    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.DefaultComponentSafeNamingStrategy
+#      use-new-id-generator-mappings: true
+    show-sql: true
+server:
+  context-path: /gleaning
+
+
+#mail
+mail:
+  port: 25
+  host: smtp.qq.com
+  username: 2791378991@qq.com
+  password: ptnmzqkpwpfcdgce
+  timeout: 25000
+  auth: false
+  starttlsEnable: true
+  encoding: UTF-8
+  from: 2791378991@qq.com
+
+#zookeeper
+zookeeper:
+  ip: 192.168.136.131
+  port: 4180
+  retry: 1000
+#logging:
+#  file: E:/Temp/gleaning_log/gleaning.log
+#监控
+management:
+  security:
+    enabled: false

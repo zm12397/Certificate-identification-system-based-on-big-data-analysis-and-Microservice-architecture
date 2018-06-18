@@ -1,0 +1,5 @@
+#main{width: 100%;margin-top: 51px;background-color: #F8F8F8;}
+#main .page-header{border:1px solid #e6e6e6;width:90%;background:white;margin:0 auto;margin-top:30px;color: #505050;height: 70px;padding: 14px 87px 0px 32px;}
+#main .page-header h3{margin:0;font-size: 20px;height: 34px;line-height: 34px;}
+#main .page-header a{color:#31B0D5;border-color:#31B0D5; }
+#main .page-header span a:hover{color: white;background-color:#31B0D5;}

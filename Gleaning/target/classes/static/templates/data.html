@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<style>
+	#main{width: 100%;margin-top: 51px;padding: 0;}
+	#main #map{ height: 700px; width: 100%;}
+	
+</style>
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div id="map"></div>
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js}"></script>
+      	<script type="text/javascript" th:src="@{http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js}"></script>
+       	<script type="text/javascript" th:src="@{http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM}"></script>
+       	<script type="text/javascript" th:src="@{http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js}"></script>
+	
+	<!-- <script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/echarts.js}"></script> -->
+	<script type="text/javascript">
+		//<![CDATA[
+		$(document).ready(function() {
+			$("#menu-7").addClass("select")
+			var dom = document.getElementById("map");
+			var myChart = echarts.init(dom);
+			var app = {};
+			option = null;
+			var data = [
+			   /* {name: '黑龙江', value: 150},
+			     {name: '北京', value: 270},
+			     {name: '陕西', value: 200},
+			     {name: '上海', value: 270},
+			     {name: '广东', value: 200}*/
+			     
+			];
+			var geoCoordMap = {
+			    /*'黑龙江':[126.93,45.82],
+			    '北京':[116.30,40.00],
+			    '陕西':[108.94,34.22],
+			    '上海':[121.43,31.07],
+			    '广东':[114.04,22.56]*/
+			};
+
+			function convertData(data) {
+			    var res = [];
+			    for (var i = 0; i < data.length; i++) {
+			        var geoCoord = geoCoordMap[data[i].name];
+			        if (geoCoord) {
+			            res.push({
+			                name: data[i].name,
+			                value: geoCoord.concat(data[i].value)
+			            });
+			        }
+			    }
+			    return res;
+			};
+			init()
+			$.ajax({
+				url : "anysis/provices.action",
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					var provices = result.data[0];
+					var lals = result.data[1]
+					data = [
+					    {name: provices[0], value: 200},
+					     {name: provices[1], value: 270},
+					     {name: provices[2], value: 200},
+					     {name: provices[3], value: 200},
+					     {name: provices[4], value: 270}
+					     
+					];
+					geoCoordMap[provices[0]]=[lals[0].lat,lals[0].lng]
+					geoCoordMap[provices[1]]=[lals[1].lat,lals[1].lng]
+					geoCoordMap[provices[2]]=[lals[2].lat,lals[2].lng]
+					geoCoordMap[provices[3]]=[lals[3].lat,lals[3].lng]
+					geoCoordMap[provices[4]]=[lals[4].lat,lals[4].lng]
+					init()
+				}
+			})
+			
+			function init(){
+				option = {
+				    title: {
+				        text: '全国证件丢失最密集的省市',
+				        subtext: 'data from big data',
+				        /*sublink: 'http://www.pm25.in',*/
+				        left: 'center',
+				        y:12
+				    },
+				    tooltip : {
+				        trigger: 'item'
+				    },
+				    bmap: {
+				       center: [104.114129, 37.550339],
+
+				        zoom: 5,
+				        roam: true,    //关闭区域漫游
+				        mapStyle: {
+				            styleJson: [{
+				                'featureType': 'water',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#d1d1d1'
+				                }
+				            }, {
+				                'featureType': 'land',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#f3f3f3'
+				                }
+				            }, {
+				                'featureType': 'railway',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'highway',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#fdfdfd'
+				                }
+				            }, {
+				                'featureType': 'highway',
+				                'elementType': 'labels',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'arterial',
+				                'elementType': 'geometry',
+				                'stylers': {
+				                    'color': '#fefefe'
+				                }
+				            }, {
+				                'featureType': 'arterial',
+				                'elementType': 'geometry.fill',
+				                'stylers': {
+				                    'color': '#fefefe'
+				                }
+				            }, {
+				                'featureType': 'poi',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'green',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'subway',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'manmade',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#d1d1d1'
+				                }
+				            }, {
+				                'featureType': 'local',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#d1d1d1'
+				                }
+				            }, {
+				                'featureType': 'arterial',
+				                'elementType': 'labels',
+				                'stylers': {
+				                    'visibility': 'off'
+				                }
+				            }, {
+				                'featureType': 'boundary',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#fefefe'
+				                }
+				            }, {
+				                'featureType': 'building',
+				                'elementType': 'all',
+				                'stylers': {
+				                    'color': '#d1d1d1'
+				                }
+				            }, {
+				                'featureType': 'label',
+				                'elementType': 'labels.text.fill',
+				                'stylers': {
+				                    'color': '#999999'
+				                }
+				            }]
+				        }
+				    },
+				    series : [
+				        {
+				            name: 'kms',
+				            type: 'scatter',
+				            coordinateSystem: 'bmap',
+				            data: convertData(data),
+				            symbolSize: function (val) {
+				                return val[2] / 10;
+				            },
+				            label: {
+				                normal: {
+				                    formatter: '{b}',
+				                    position: 'right',
+				                    show: false
+				                },
+				                emphasis: {
+				                    show: false
+				                }
+				            },
+				            itemStyle: {
+				                normal: {
+				                    color: 'purple'
+				                }
+				            }
+				        },
+				        {
+				            name: 'Top 5',
+				            type: 'effectScatter',
+				            coordinateSystem: 'bmap',
+				            data: convertData(data.sort(function (a, b) {
+				                return b.value - a.value;
+				            }).slice(0, 6)),
+				            symbolSize: function (val) {
+				                return val[2] / 10;
+				            },
+				            showEffectOn: 'render',
+				            rippleEffect: {
+				                brushType: 'stroke'
+				            },
+				            hoverAnimation: true,
+				            label: {
+				                normal: {
+				                    formatter: '{b}',
+				                    position: 'right',
+				                    show: true
+				                }
+				            },
+				            itemStyle: {
+				                normal: {
+				                    color: 'purple',
+				                    shadowBlur: 10,
+				                    shadowColor: '#333'
+				                }
+				            },
+				            zlevel: 1
+				        }
+				    ]
+				};;
+				if (option && typeof option === "object") {
+				    myChart.setOption(option, true);
+				}
+			}
+			
+
+			
+		})
+		//]]>
+	</script>
+</body>
+</html>

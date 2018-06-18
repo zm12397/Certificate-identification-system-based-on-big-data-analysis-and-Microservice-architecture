@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<link th:href="@{css/main.css}" rel="stylesheet"></link>
+<style>
+	
+	/* #records{background-color: #EEEEEE;padding-top: 15px;padding-bottom: 10px;color: #777777;} */
+	#content{width: 100%;/* background-color:#EEEEEE;  */padding: 10px 0;}
+	form {border:1px solid #e6e6e6;	width: 90%;margin: 0 auto;background-color: white;padding: 10px 20px;}
+	#table tr{height: 50px;line-height: 50px;}
+	#table th {height: 50px;line-height: 50px;text-align: center;text-align-last: center;min-width: 145px;}
+	#table td {height: 50px;line-height: 50px;text-align: center; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;min-width: 145px;}
+	#table tr:hover{cursor: pointer;}
+	legend{margin-left: 10px;}
+	#cimage{width: 340px;height: 150px;}
+	 #valid{display: none;}
+	#claim{display: none;} 
+</style>	
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div class="page-header">
+		  <h3><a href="school">校园专区</a><small>&nbsp;>>&nbsp;校园证件详细信息</small>
+		  <span class="add pull-right"><a id="add" class="btn btn-default" href="add-sendback">发布招领</a></span>
+		  </h3>
+		</div>
+		<div id="content" class="table-responsive">
+			<form class="form-horizontal"  onsubmit="return false">
+				<fieldset>
+				<legend class="h4">详细信息</legend>
+			<table id="table" class="table table-bordered">
+				
+				<tr>
+					<th>证件姓名：</th><td><span id="cname" class="form-control-static">张一</span></td>
+					<th>证件类型：</th><td ><span id="ctype" class="form-control-static"></span></td>
+					<td colspan="2" rowspan="3">
+						<img id="cimage" src="" alt="证件照片" />
+					</td>
+				</tr>
+				<tr>
+					<th>证件号码：</th><td colspan="3" ><span id="cnumber" class="form-control-static"></span></td>
+				</tr>	
+				<tr>
+					<th>证件信息：</th><td colspan="3" ><span id="cinfo" class="form-control-static"></span></td>
+				</tr>	
+				<tr>
+					<th>证件备注：</th><td colspan="5" ><span id="cremark" class="form-control-static"></span></td>
+				</tr>	
+				<tr>	
+					<th>招领类型：</th><td ><span id="type" class="form-control-static"></span></td>
+					<th>招领状态：</th><td ><span id="state" class="form-control-static"></span></td>
+					<th>捡拾者姓名：</th><td ><span id="pname" class="form-control-static"></span></td>
+				</tr>	
+				<tr>	
+					<th>奖励金额：</th><td ><span id="money" class="form-control-static"></span></td>
+					<th>捡拾地点：</th><td colspan="3" ><span id="paddr" class="form-control-static"></span></td>
+				</tr>	
+				<tr>	
+					<th>学校名称：</th><td ><span id="school" class="form-control-static"></span></td>
+					<th>招领地址：</th><td colspan="3" ><span id="location" class="form-control-static"></span></td>
+				</tr>	
+				<tr>
+					<th>发布时间：</th><td colspan="2" ><span id="gmt" class="form-control-static"></span></td>
+					<th>有效日期：</th><td colspan="2" ><span id="vdate" class="form-control-static"></span></td>
+				</tr>	
+			</table>	
+				</fieldset>
+				<fieldset id="valid">
+				<legend class="h4">验证信息</legend>
+					<div class="form-group row">
+						<label class="col-sm-2 control-label" for="vname">
+							证件姓名：
+						</label>
+						<div class="col-sm-2">
+							<input id="vname" name="vname" placeholder="请输入证件姓名" type="text" class="form-control"></input>
+						</div>
+						<label class="col-sm-2 control-label" for="vnumber">
+							证件号码：
+						</label>
+						<div class="col-sm-4">
+							<input id="vnumber" name="vnumber" placeholder="请输入证件号码" type="text" class="form-control"></input>
+						</div>
+						<div class="col-sm-2">
+							<button id="validate" class="btn btn-defauilt">验证</button>
+						</div>
+						<!-- <div class="col-sm-4 star" >*<span id="name-info" class="info"></span></div> -->
+					</div>
+
+				</fieldset>
+				<fieldset id="claim">
+				<legend class="h4">认领信息</legend>
+					<div class="form-group row">
+						<label class="col-sm-2 control-label" for="school2">
+							学校名称：
+						</label>
+						<div class="col-sm-4">
+							<input id="school2" name="school2" disabled="disabled" type="text" class="form-control"></input>
+						</div>
+						<label class="col-sm-2 control-label" for="smoney">
+							奖励金额：
+						</label>
+						<div class="col-sm-2">
+							<select id="smoney" name="smoney" class="form-control">
+								<option value="0">0.00￥</option>
+								<option value="2" selected = "selected">2.00￥</option>
+								<option value="5">5.00￥</option>
+								<option value="10">10.00￥</option>
+							</select>
+						</div>
+						<div class="col-sm-2">
+							<button id="submit" class="btn btn-defauilt">认领</button>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 control-label" for="location2">
+							招领地址：
+						</label>
+						<div class="col-sm-6">
+							<input id="location2" name="location2"  disabled="disabled"  type="text" class="form-control"></input>
+						</div>
+					</div>
+
+				</fieldset>
+			</form>
+		</div>
+		
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyTimeUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyEnumUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyUrlUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyCodeUtils.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		$(document).ready(function() {
+			$("#menu-4").addClass("select")
+			var id = getUrlParam('id')
+			$.ajax({
+				url : "claim/info.action",
+				data:{"id":id},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					var obj = result.data
+					// console.log(obj)
+					$("#cname").html( encryptName(String(obj.certificate.name),4,'x'))
+					$("#ctype").html(getCertificateType(obj.certificate.type))
+					if(obj.certificate.image != null){
+						$("#cimage").prop("src","img/certificate/" + obj.certificate.image.url)
+					}
+					
+
+					$("#cnumber").html(encryptNumber(String(obj.certificate.number),4,4,10,'x'))
+					$("#cinfo").html(obj.certificate.info)
+					$("#cremark").html(obj.certificate.remark)
+					$("#type").html(getSendBackType(obj.type))
+					$("#state").html(getSendBackState(obj.state))
+					$("#pname").html(obj.pick.name)
+					$("#money").html(obj.money)
+					$("#paddr").html(obj.pickAddr)
+					if(obj.location != null){
+						$("#school").html(obj.location.schoolName)
+						$("#location").html(obj.location.location)
+						$("#school2").val(obj.location.schoolName)
+						$("#location2").val(obj.location.location)
+					}
+					
+					$("#gmt").html($.myTime.UnixToDate2(obj.gmtCreate))
+					if(obj.validDate == -1){
+						obj.validDate = "永久有效";
+					}else{
+						obj.validDate = $.myTime.UnixToDate2(obj.validDate)
+					}
+					$("#vdate").html(obj.validDate)
+					if(obj.state == 3){
+						$("#valid").slideDown(1000)
+					}
+				}
+			})
+			$("#validate").click(function(){
+				var name = $("#vname").val()
+				var number = $("#vnumber").val()
+				if(name == null || name == ''){
+					layer.msg("请输入证件姓名进行验证")
+					$("#vname").focus()
+					return;
+				}
+				if(number == null || number == ''){
+					layer.msg("请输入证件姓名进行验证")
+					$("#vnumber").focus()
+					return;
+				}
+				var oData = {"name":name,"number":number,"id":id}
+				$.ajax({
+					url : "claim/validate.action",
+					data:oData,
+					method:"post",
+					dataType:"json",
+					success : function(result) {
+						layer.msg(result.message)
+						if(result.code == "0000"){
+							$("#claim").slideDown(1000)
+						}
+					}
+				})
+			})
+			$("#submit").click(function(){
+				var money = $("#smoney").val()
+				var oData = {"money":money,"id":id/*,"userId":1*/}
+				$.ajax({
+					url : "school/claim.action",
+					data:oData,
+					method:"post",
+					dataType:"json",
+					success : function(result) {
+						layer.msg(result.message)
+						if(result.code == "0000"){
+							$("#valid").slideUp(1000)
+							$("#claim").slideUp(1000)
+
+						}
+					}
+				})
+			})
+		})
+		
+		//]]>
+	</script>
+</body>
+</html>

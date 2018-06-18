@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<style>
+	#main{width: 100%;margin-top: 51px;}
+	#main #bar{height: 500px;width: 80%;margin:30px auto;}
+	#main #bottom{width: 80%;text-align: left;margin:0px auto;}
+</style>
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div id="bar"></div>
+		<div id="bottom" class="h4">您在所有用户的好人榜中排名是：第<span id="rank"></span>名！</div>
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/echarts.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		$(document).ready(function() {
+			$("#menu-5").addClass("select")
+			$.ajax({
+				url : "good/top.action",
+				data : {"top":10},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						// console.log(result.data)
+						var aUser = result.data.content
+						var xAxisData = []
+						var timeData = []
+						var scoreData = []
+						$.each(aUser, function(i,val){
+						      xAxisData[i]=val.name
+						      timeData[i]=val.sumTime
+						      scoreData[i]=val.creditScore
+						 }); 
+						 var option = {
+						    title : {
+						        text: '好人榜Top10',
+						        subtext: '按成功归还次数排名'
+						    },
+						    tooltip : {
+						        trigger: 'axis'
+						    },
+						    legend: {
+						        data:['帮助次数','信用积分']
+						    },
+						    toolbox: {
+						        show : true,
+						        feature : {
+						            mark : {show: true},
+						            dataView : {show: true, readOnly: false},
+						            magicType : {show: true, type: ['line', 'bar']},
+						            restore : {show: true},
+						            saveAsImage : {show: true}
+						        }
+						    },
+						    calculable : true,
+						    xAxis : [
+						        {
+						            type : 'category',
+						            data : xAxisData,
+						            axisLabel:{
+						            	rotate:'30'
+						            }
+						        }
+						    ],
+						    yAxis : [
+						        {
+						            type : 'value'
+						        }
+						    ],
+						    series : [
+						        {
+						            name:'帮助次数',
+						            type:'bar',
+						            data:timeData,
+						            markPoint : {
+						                data : [
+						                    {type : 'max', name: '最大值'},
+						                    {type : 'min', name: '最小值'}
+						                ]
+						            },
+						            markLine : {
+						                data : [
+						                    {type : 'average', name: '平均值'}
+						                ]
+						            },itemStyle:{
+						            	normal: {
+								       color:['#30A9B2']
+								    }
+						            }
+						        },
+						        {
+						            name:'信用积分',
+						            type:'line',
+						            data:scoreData,
+						            markPoint : {
+						               /* data : [
+						                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
+						                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+						                ]*/
+						            },
+						            markLine : {
+						                data : [
+						                    {type : 'average', name : '平均值'}
+						                ]
+						            },itemStyle:{
+						            	normal: {
+								       color:['#A0BF71']
+								    }
+						            }
+						        }
+						    ]
+						};
+						 // 为echarts对象加载数据 
+			 			myChart.setOption(option); 
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+			var myChart = echarts.init(document.getElementById('bar')); 
+			
+                    		$.ajax({
+				url : "good/getMy.action",
+				// data:{"id":1},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						// console.log()
+						$("#rank").html(result.data)
+					}
+				}
+			})
+
+
+			
+		})
+		//]]>
+	</script>
+</body>
+</html>

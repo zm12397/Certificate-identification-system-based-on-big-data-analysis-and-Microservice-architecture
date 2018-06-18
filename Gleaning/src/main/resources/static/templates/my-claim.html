@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<link th:href="@{css/main.css}" rel="stylesheet"></link>
+<style>
+	
+	#records{/* background-color: #EEEEEE; */padding-top: 15px;padding-bottom: 10px;color: #777777;}
+	#records>.row{width: 90%;margin:0 auto;background-color: #FFFFFF;padding:15px 0;margin: 15px auto;height: 260px;border: 1px solid  #E1E4E6;}
+	#records>.row .record-title{color: #2AB8BD;height: 40px;line-height: 40px;font-size: 1.1em;}
+	#records>.row .record-info{text-align: left;line-height: 25px;}
+	#records>.row .record-info .info-title{color: #505050;text-align: right;}
+	#records>.row .option{border-left: 1px solid  #E1E4E6;height: 100%;}
+	#records>.row .record-text-title{color: #2AB8BD;text-align: left;height: 40px;line-height: 40px;font-size: 1.1em;}
+	#records>.row .record-text{color: #777777;text-align: center;height: 40px;line-height: 40px;}
+	#records>.row .record-text .btn{height: 30px;line-height: 30px;padding: 0;color: #5CB8E7;font-weight: 800;margin-top: 5px;margin-left: 7px;}
+	#records>.row .record-text .btn:hover{background-color: #5CB8E7;color: white;border: none;}
+</style>	
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div class="page-header">
+		  <h3><a href="my-claim">证件认领</a><small>&nbsp;>>&nbsp;我的认领记录</small>
+		  <span class="add pull-right"><a id="" class="btn btn-default" href="all-sendback">全部招领</a></span>
+		  </h3>
+		</div>
+		<div id="records">
+			<!-- <div id="record-1" class="row">
+				<div class="col-xs-8">
+					<div class="record-title col-xs-12">招领信息：</div>
+					<div class="record-info col-xs-12">
+						<span class="col-xs-2 info-title">招领状态：</span>
+						<span class="col-xs-3">
+							已发布招领
+						</span>
+						<span class="col-xs-2 col-xs-offset-1 info-title">发布时间：</span>
+						<span class="col-xs-4">
+							2017-04-15 10:23
+						</span>
+						<span class="col-xs-2 info-title">招领类型：</span>
+						<span class="col-xs-3">
+							公共招领
+						</span>
+						<span class="col-xs-2 col-xs-offset-1 info-title">捡到地点：</span>
+						<span class="col-xs-4">
+							山东省济南市
+						</span>
+						<span class="col-xs-2 info-title">有效日期：</span>
+						<span class="col-xs-4">
+							2018-04-15 10:23
+						</span>
+						
+						<span class="col-xs-2 info-title school">招领地点：</span>
+						<span class="col-xs-4 school">
+							
+						</span>
+					</div>
+					<div class="record-title col-xs-12">证件信息：</div>
+					<div class="record-info col-xs-12">
+						<span class="col-xs-2 info-title">证件类型：</span>
+						<span class="col-xs-3">
+							身份证
+						</span>
+						<span class="col-xs-2 col-xs-offset-1 info-title">证件号码：</span>
+						<span class="col-xs-4">
+							3713021996111015X
+						</span>
+						<span class="col-xs-2 info-title">证件姓名：</span>
+						<span class="col-xs-3">
+							张一
+						</span>
+						<span class="col-xs-2 col-xs-offset-1 info-title">证件信息：</span>
+						<span class="col-xs-4">
+							——
+						</span>
+						<span class="col-xs-2 info-title">证件备注：</span>
+						<span class="col-xs-4">
+							——
+						</span>
+					</div>
+				</div>
+				<div class="col-xs-4 option">
+					
+					<div class="record-title col-xs-12">归还信息：</div>
+					<div class="record-info col-xs-12">
+						<span class="col-xs-4 info-title">邮寄姓名：</span>
+						<span class="col-xs-8">
+							李二
+						</span>
+						<span class="col-xs-4 info-title">邮寄地址：</span>
+						<span class="col-xs-8">
+							黑龙江省哈尔滨市
+						</span>
+						<span class="col-xs-4 info-title">手机号码：</span>
+						<span class="col-xs-8">
+							15963339701
+						</span>
+						<span class=" col-xs-4 info-title">快递单号：</span>
+						<span class="col-xs-8">
+							32746782648735782529347
+						</span>
+						<span class=" col-xs-4 info-title">奖励金额：</span>
+						<span class="col-xs-8">
+							5.00
+						</span>
+						
+					</div>
+					
+					<div class="record-text-title col-xs-4">认领操作：</div>
+					<div class="record-text col-xs-8">
+						<button class="col-xs-12 btn btn-default">点击完成认领</button>
+					</div>
+				</div>
+				
+				
+			
+			</div> -->
+		</div>
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyTimeUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyEnumUtils.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		function btnClick(id,type){
+			var oData = {"id":id,"option":type,"isThanks":0}
+			if(type == 1){
+				layer.confirm('顺便给对方发一封感谢信吗？', {
+				 title:"您将要完成对此证件的认领",
+				  btn: ['好的', '还是不发了吧'] //可以无限个按钮
+				 /* ,btn3: function(index, layero){
+				    //按钮【按钮三】的回调
+				  }*/
+				}, function(index, layero){
+				  //按钮【按钮一】的回调
+				  oData.isThanks = 1;
+			              complete(oData)
+			               layer.close(index);
+				}, function(index){
+				  //按钮【按钮二】的回调
+				   complete(oData)
+				    layer.close(index);
+				});
+			
+			}else{
+				layer.confirm('如果取消对此证件的认领，对方将无法获取奖励金并接受信用惩罚，请慎重选择', {
+				 title:"您将要取消对此证件的认领",
+				  btn: ['狠心取消', '算了，再考虑考虑吧'] //可以无限个按钮
+				 /* ,btn3: function(index, layero){
+				    //按钮【按钮三】的回调
+				  }*/
+				}, function(index, layero){
+				  //按钮【按钮一】的回调
+				   complete(oData)
+			               layer.close(index);
+				}, function(index){
+				  //按钮【按钮二】的回调
+				    return;
+				    layer.close(index);
+				});
+			}
+			
+			 
+		}
+		function complete(oData){
+			// console.log(oData)
+			$.ajax({
+				url : "claim/submit.action",
+				data :oData,
+				method:"post",
+				dataType:"json",
+				success : function(result) {
+					layer.msg(result.message)
+					if(result.code == '0000'){
+						$("#claim-"+oData.id).html('&nbsp;无').css('text-align',"left")
+					}
+					
+				}
+			})
+		}
+		function translateValidDate(date){
+			if(date == -1){
+				return "永久有效"
+			}else{
+				return  $.myTime.UnixToDate2(date,true)
+			}
+		}
+		$(document).ready(function() {
+			$("#menu-3").addClass("select")
+
+			 $.ajax({
+				url : "claim/getMy.action",
+				// data : {"id":1},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						var data = result.data
+						console.log(data)
+						
+						for(var i in data){
+							/*jQuery.each(data[i], function(j, val) {  
+							    console.log(j + ' : ' +val)
+							    if(val == null){
+							    	   data[i][j] =  "无"; 
+							    }else if(val typeof )
+							});  */
+							var id = data[i].id;
+							var state = getSendBackState(data[i].state);
+							var publishTime = $.myTime.UnixToDate2(data[i].gmtCreate,true)
+							var sendBackType = getSendBackType(data[i].type)
+							var pickAddr = data[i].pickAddr
+							var validDate = translateValidDate(data[i].validDate)
+							var certificateType = getCertificateType(data[i].certificate.type)
+							var certificateNumber = data[i].certificate.number;
+							var certificateName =  data[i].certificate.name
+							var certificateInfo = data[i].certificate.info;
+							var certificateRemark =  data[i].certificate.remark
+							var postName = data[i].postName;
+							var postAddr = data[i].postAddr;
+							var postTel = data[i].postTel;
+							var postNumber = data[i].postNumber;
+							var money =  data[i].money;
+							var location = "无"
+							if(data[i].type == 1){
+								location = data[i].location.schoolName + data[i].location.location
+							}
+							var htmRecord = '<div id="record-'+id+'" class="row">' + 
+	'<div class="col-xs-8">' + 
+		'<div class="record-title col-xs-12">招领信息：</div>' + 
+		'<div class="record-info col-xs-12">' + 
+			'<span class="col-xs-2 info-title">招领状态：</span>' + 
+			'<span class="col-xs-3">'+state+'</span>' + 
+			'<span class="col-xs-2 col-xs-offset-1 info-title">发布时间：</span>' + 
+			'<span class="col-xs-4">'+publishTime+'</span>' + 
+			'<span class="col-xs-2 info-title">招领类型：</span>' + 
+			'<span class="col-xs-3">'+sendBackType+'</span>' + 
+			'<span class="col-xs-2 col-xs-offset-1 info-title">捡到地点：</span>' + 
+			'<span class="col-xs-4">'+pickAddr+'</span>' + 
+			'<span class="col-xs-2 info-title">有效日期：</span>' + 
+			'<span class="col-xs-4">'+validDate+'</span>'+
+			'<span class="col-xs-2 info-title school">招领地点：</span>'+
+						'<span class="col-xs-4 school">' + location +'</span>'+
+		'</div>' + 
+		'<div class="record-title col-xs-12">证件信息：</div>' + 
+		'<div class="record-info col-xs-12">' + 
+			'<span class="col-xs-2 info-title">证件类型：</span>' + 
+			'<span class="col-xs-3">'+certificateType+'</span>' + 
+			'<span class="col-xs-2 col-xs-offset-1 info-title">证件号码：</span>' + 
+			'<span class="col-xs-4">'+certificateNumber+'</span>' + 
+			'<span class="col-xs-2 info-title">证件姓名：</span>' + 
+			'<span class="col-xs-3">'+certificateName+'</span>' + 
+			'<span class="col-xs-2 col-xs-offset-1 info-title">证件信息：</span>' + 
+			'<span class="col-xs-4">'+ certificateInfo+'</span>' + 
+			'<span class="col-xs-2 info-title">证件备注：</span>' + 
+			'<span class="col-xs-4">'+ certificateRemark+'</span>' + 
+		'</div>' + 
+	'</div>' + 
+	'<div class="col-xs-4 option">' + 
+		'<div class="record-title col-xs-12">归还信息：</div>' + 
+		'<div class="record-info col-xs-12">' + 
+			'<span class="col-xs-4 info-title">邮寄姓名：</span>' + 
+			'<span class="col-xs-8">'+postName +'</span>' + 
+			'<span class="col-xs-4 info-title">邮寄地址：</span>' + 
+			'<span class="col-xs-8">'+postAddr +'</span>' + 
+			'<span class="col-xs-4 info-title">手机号码：</span>' + 
+			'<span class="col-xs-8">'+postTel +'</span>' + 
+			'<span class=" col-xs-4 info-title">快递单号：</span>' +
+			'<span class="col-xs-8">'+postNumber +'</span>' +
+			'<span class=" col-xs-4 info-title">奖励金额：</span>'+
+			'<span class="col-xs-8">' + money + '</span>'+
+		'</div>' + 
+		'<div class="record-text-title col-xs-4">认领操作：</div>'+
+		'<div id="claim-'+id+'" class="record-text col-xs-8">'+
+			'<button class="col-xs-5 btn btn-default"onclick="btnClick('+id+',1)">点击完成认领</button>'+
+			'<button class="col-xs-5 btn btn-default"onclick="btnClick('+id+',0)">认领失败</button>'+
+		'</div>'+
+	'</div>' + 
+'</div>'
+							$("#records").append(htmRecord)
+							if(state == '已完成' || state == '已失效'){
+								$("#claim-"+id).html('&nbsp;无').css('text-align',"left")
+							}
+						}
+						/*var aUser = result.data.content
+						var j = 1;
+						for(var i in aUser){
+							$("#goods-list").append('<li class="list-group-item row"><span class="name col-sm-5">'
+								+ aUser[i].name + '</span><span class="score col-sm-4">' + aUser[i].sumTime + 
+								'</span><span id="range-' + j +'"  class="label label-info col-sm-3">' + j +'</span></li>')
+							j++;
+						}
+						$("#range-1").removeClass("label-info").addClass("label-danger");
+						$("#range-2").removeClass("label-info").addClass("label-success");
+						$("#range-3").removeClass("label-info").addClass("label-primary");*/
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+		})
+		//]]>
+	</script>
+</body>
+</html>
