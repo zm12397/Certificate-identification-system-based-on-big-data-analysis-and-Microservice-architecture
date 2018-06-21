@@ -1,0 +1,11 @@
+#配置模板
+#https://docs.spring.io/spring-boot/docs/1.4.0.RELEASE/reference/html/common-application-properties.html
+spring:
+  #数据源配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://202.118.212.239:3307/gleaning?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false
+    username: glean
+    password: 
+server:
+  context-path: /gleaning-mysql-hdfs
