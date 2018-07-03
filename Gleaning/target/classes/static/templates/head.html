@@ -1,0 +1,104 @@
+ <!DOCTYPE html>
+ <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"  xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{css/bootstrap.min.css}" href="../css/bootstrap.min.css" /> -->
+	<!-- <link rel="stylesheet" type="text/css" th:href="@{css/head.css}" href="../css/head.css" /> -->
+
+	<meta charset="utf-8"></meta>
+	<style>
+		#btn-logout{cursor:pointer;}
+		nav.navbar-default{background-color: #FEFEFE;border-bottom:1px solid #ddd;}
+		.navbar-right #login-tools{font-size:0.85em;height:21px;line-height:21px;margin-right:50px;}
+		.navbar-right #login-tools a{color: #57bae8;/* color:#3287FF; */}
+		ul.nav li.select{background-color: #FEFEFE;color: #57bae8;}
+		ul.nav li.select>a{color: #57bae8;}
+		ul.nav li.select>a:hover{color:#3287FF;}
+	</style>
+	
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<span class="navbar-right">
+				<p id="login-tools" class="navbar-text">
+
+					
+					<shiro:guest>
+						<span>
+						<a href="login" id="btn-login" class="navbar-link">登录</a>&nbsp;
+						<a href="register" id="btn-register" class="navbar-link">注册</a>&nbsp;&nbsp;
+						</span>
+					</shiro:guest>
+					<shiro:user>    
+						<span id="nav-user" class="navbar-link">欢迎您：<span ><shiro:principal property="name"/> </span>&nbsp;&nbsp;</span>
+						<a id="btn-logout" href="logout" class="navbar-link">注销</a>&nbsp;&nbsp;
+					</shiro:user> 
+					
+				</p>
+			</span>
+		<div class="container">
+			<div class="navbar-header">
+				<a href="index" class="navbar-brand">"拾遗"证件认领互助系统</a>
+			</div>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li id="menu-1">
+					<a href="index">首页</a>
+				</li>
+				<!-- <li>
+					<a href="">证件招领</a>
+				</li> -->
+				<li class="dropdown" id="menu-2">
+					<a href="all-sendback" class="dropdown-toggle" data-toggle="dropdown">证件招领<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="my-sendback">我的证件招领</a></li>
+						<li><a href="add-sendback">发布证件招领</a></li>
+						
+					</ul>
+				</li>
+				<li class="dropdown" id="menu-3">
+					<a href="" class="dropdown-toggle" data-toggle="dropdown">证件认领<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<!-- <li><a href="">证件认领</a></li> -->
+						<li><a href="my-claim">我的证件认领</a></li>
+						<li><a href="all-sendback">证件招领信息</a></li>
+					</ul>
+				</li>
+				<li id="menu-4">
+					<a href="school">校园专区</a>
+				</li>
+				<li id="menu-5">
+					<a href="good">好人榜</a>
+				</li>
+				
+				<li id="menu-6">
+					<a href="thanks">感谢信</a>
+				</li>
+				<li id="menu-7">
+					<a href="data">数据中心</a>
+				</li>
+				<li id="menu-8">
+					<a href="personal-center">个人中心</a>
+				</li>
+				<li class="dropdown" id="menu-9" shiro:hasRole="admin">
+					<a href="user-management" class="dropdown-toggle" data-toggle="dropdown">系统管理<span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="user-management">用户管理</a></li>
+						<li><a href="add-user">添加用户</a></li>
+						<li><a href="certificates-management">证件信息管理</a></li>
+						<li><a href="sendbackes-management">招领信息管理</a></li>
+					</ul>
+				</li>
+				<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+			</ul>
+			
+		</div>
+
+	</nav>
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	
+	<!-- <script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script> -->
+	<script th:src="@{js/head.js}" src="../js/head.js"></script>
+	
+</body>
+</html>

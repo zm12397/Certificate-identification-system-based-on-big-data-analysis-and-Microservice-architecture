@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<style>
+	#main{width: 100%;margin-top: 51px;background-color: #F8F8F8/* #F6F6F6 */;border:1px solid #EEEEEE; }
+	#main #content{width: 1005px;margin: 10px auto;border-radius: 2px;}
+	#main #content>div{border:1px solid #E8E8E8;}
+	#main #content #card{height: 270px;position: relative;background-image: url(img/background001.jpg);margin-bottom: 5px;}
+	#main #content #card #image{width: 160px;height: 160px;z-index: 4;border: 4px solid #fff;border-radius: 8px;position: absolute;bottom: 30px;left:20px;z-index: 2;}
+	#main #content #card #image img{width: 100%;height: 100%;}
+	#main #content #card #bottom{width:100%;background-color: white;height: 135px;position: absolute;bottom: 0;z-index: 1;color: #8590A6;padding-top: 20px;}
+	#main #content #card #bottom>div{margin-left: 210px;text-align: left;}
+	#main #content #left{width: 695px;margin-bottom: 50px;min-height: 400px;background-color: white;}
+	#main #content #left .tab-content{margin:15px 20px;}
+	#main #content .right{width: 300px;margin-left: 10px;padding: 15px 20px;}
+	#main #content #user-info{margin-bottom: 10px;}
+	#main #content>div .h3{color: #646464;font-size: 15px;font-weight: 600;margin-top: 0;}
+	#main #content>div .row{color: rgb(133, 144, 166);font-size: 13px;margin-top: 6px;}
+	#main #content #left .row{width: 100%;font-size: 14px;line-height:25px;color:#999999;/* color: #646464; */padding: 5px 20px;}
+	#main #content #left .content-title{color:#2AB8BD;font-size: 16px;border-bottom: 1px solid #EEEEEE;}
+	#user-info,#account-info{background-color: white;}
+	span.badge{background-color: #999FA7;}
+</style>
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div id="content">
+			<div id="card">
+				<div id="image"><img src="" alt="用户头像" /></div>
+				<div id="bottom">
+					<div id="name" class="h3">张俸铭</div>
+					<div id="createDate" class="h5">注册时间：2018年04月18日</div>
+				</div>
+			</div>
+			<div id="left" class="pull-left">
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#claiming" data-toggle="tab">正在认领的证件 <span id="claiming-num" class="badge"></span></a></li>
+					<li class=""><a href="#picking"  data-toggle="tab">正在招领的证件 <span id="picking-num" class="badge"></span></a></li>
+					<li class=""><a href="#returned"  data-toggle="tab">已经归还的证件 <span id="returned-num" class="badge"></span></a></li>
+					<li class=""><a href="#thanksLetters"  data-toggle="tab">收到的感谢信 <span id="thanksLetters-num" class="badge"></span></a></li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active fade in" id="claiming">
+						<div class="content-title">证件信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">证件类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="ctype">无</span>
+
+							<span class="col-xs-2 text-center">证件姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cname">无</span>
+
+							<span class="col-xs-2 text-center">证件号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cnumber">无</span>
+
+							<span class="col-xs-2 text-center">证件信息</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cinfo">无</span>
+
+							<span class="col-xs-2 text-center">证件备注</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cremark">无</span>
+						</div>
+						<div class="content-title">招领信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">招领状态</span>
+							<span class="col-xs-8 col-xs-offset-2" id="state">无</span>
+
+							<span class="col-xs-2 text-center">招领类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="type">无</span>
+
+							<span class="col-xs-2 text-center">奖励金额</span>
+							<span class="col-xs-8 col-xs-offset-2" id="money">无</span>
+
+							<span class="col-xs-2 text-center">发布时间</span>
+							<span class="col-xs-8 col-xs-offset-2" id="gmtCreate">无</span>
+
+							<span class="col-xs-2 text-center">有效日期</span>
+							<span class="col-xs-8 col-xs-offset-2" id="validDate">无</span>
+							
+							<span class="col-xs-2 text-center">拾者姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickName">无</span>
+
+							<span class="col-xs-2 text-center">拾取地点</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickAddr">无</span>
+
+							<span class="col-xs-2 text-center">学校名称</span>
+							<span class="col-xs-8 col-xs-offset-2" id="school">无</span>
+
+							<span class="col-xs-2 text-center">招领地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="location">无</span>
+
+
+						</div>
+						<div class="content-title">邮寄信息</div>
+						<div class="row">
+							
+							<span class="col-xs-2 text-center">邮寄地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postAddr">无</span>
+
+							<span class="col-xs-2 text-center">邮寄姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postName">无</span>
+
+							<span class="col-xs-2 text-center">邮寄号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postTel">无</span>
+
+							<span class="col-xs-2 text-center">快递单号</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postNumber">无</span>
+							
+							<!-- <span class="col-xs-4">证件照片</span>
+							<span class="col-xs-8" id=""></span> -->
+						</div>
+					</div>
+					<div class="tab-pane fade" id="picking">
+						
+						<div class="content-title">证件信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">证件类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="ctype2">无</span>
+
+							<span class="col-xs-2 text-center">证件姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cname2">无</span>
+
+							<span class="col-xs-2 text-center">证件号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cnumber2">无</span>
+
+							<span class="col-xs-2 text-center">证件信息</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cinfo2">无</span>
+
+							<span class="col-xs-2 text-center">证件备注</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cremark2">无</span>
+						</div>
+						<div class="content-title">招领信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">招领状态</span>
+							<span class="col-xs-8 col-xs-offset-2" id="state2">无</span>
+
+							<span class="col-xs-2 text-center">招领类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="type2">无</span>
+
+							<span class="col-xs-2 text-center">奖励金额</span>
+							<span class="col-xs-8 col-xs-offset-2" id="money2">无</span>
+
+							<span class="col-xs-2 text-center">发布时间</span>
+							<span class="col-xs-8 col-xs-offset-2" id="gmtCreate2">无</span>
+
+							<span class="col-xs-2 text-center">有效日期</span>
+							<span class="col-xs-8 col-xs-offset-2" id="validDate2">无</span>
+							
+							<span class="col-xs-2 text-center">拾者姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickName2">无</span>
+
+							<span class="col-xs-2 text-center">拾取地点</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickAddr2">无</span>
+
+							<span class="col-xs-2 text-center">学校名称</span>
+							<span class="col-xs-8 col-xs-offset-2" id="school2">无</span>
+
+							<span class="col-xs-2 text-center">招领地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="location2">无</span>
+
+
+						</div>
+						<div class="content-title">邮寄信息</div>
+						<div class="row">
+							
+							<span class="col-xs-2 text-center">邮寄地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postAddr2">无</span>
+
+							<span class="col-xs-2 text-center">邮寄姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postName2">无</span>
+
+							<span class="col-xs-2 text-center">邮寄号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postTel2">无</span>
+
+							<span class="col-xs-2 text-center">快递单号</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postNumber2">无</span>
+							
+							<!-- <span class="col-xs-4">证件照片</span>
+							<span class="col-xs-8" id=""></span> -->
+						</div>
+					</div>
+					<div class="tab-pane fade" id="returned">
+						<div class="content-title">证件信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">证件类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="ctype3">无</span>
+
+							<span class="col-xs-2 text-center">证件姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cname3">无</span>
+
+							<span class="col-xs-2 text-center">证件号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cnumber3">无</span>
+
+							<span class="col-xs-2 text-center">证件信息</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cinfo3">无</span>
+
+							<span class="col-xs-2 text-center">证件备注</span>
+							<span class="col-xs-8 col-xs-offset-2" id="cremark3">无</span>
+						</div>
+						<div class="content-title">招领信息</div>
+						<div class="row">
+							<span class="col-xs-2 text-center">招领状态</span>
+							<span class="col-xs-8 col-xs-offset-2" id="state3">无</span>
+
+							<span class="col-xs-2 text-center">招领类型</span>
+							<span class="col-xs-8 col-xs-offset-2" id="type3">无</span>
+
+							<span class="col-xs-2 text-center">奖励金额</span>
+							<span class="col-xs-8 col-xs-offset-2" id="money3">无</span>
+
+							<span class="col-xs-2 text-center">发布时间</span>
+							<span class="col-xs-8 col-xs-offset-2" id="gmtCreate3">无</span>
+
+							<span class="col-xs-2 text-center">有效日期</span>
+							<span class="col-xs-8 col-xs-offset-2" id="validDate3">无</span>
+							
+							<span class="col-xs-2 text-center">拾者姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickName3">无</span>
+
+							<span class="col-xs-2 text-center">拾取地点</span>
+							<span class="col-xs-8 col-xs-offset-2" id="pickAddr3">无</span>
+
+							<span class="col-xs-2 text-center">学校名称</span>
+							<span class="col-xs-8 col-xs-offset-2" id="school3">无</span>
+
+							<span class="col-xs-2 text-center">招领地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="location3">无</span>
+
+
+						</div>
+						<div class="content-title">邮寄信息</div>
+						<div class="row">
+							
+							<span class="col-xs-2 text-center">邮寄地址</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postAddr3">无</span>
+
+							<span class="col-xs-2 text-center">邮寄姓名</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postName3">无</span>
+
+							<span class="col-xs-2 text-center">邮寄号码</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postTel3">无</span>
+
+							<span class="col-xs-2 text-center">快递单号</span>
+							<span class="col-xs-8 col-xs-offset-2" id="postNumber3">无</span>
+							
+							<!-- <span class="col-xs-4">证件照片</span>
+							<span class="col-xs-8" id=""></span> -->
+						</div>
+					</div>
+					<div class="tab-pane fade" id="thanksLetters">
+						<div class="row">
+							<!-- <span class="col-xs-3 text-center">2018年05月01日</span>
+							<span class="col-xs-8 col-xs-offset-1" id="">收到了来自***的感谢信。</span> -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="user-info" class="right pull-left">
+				<div class="h3">个人信息</div>
+				<div class="row">
+					<span class="col-xs-2" id="sex"></span>
+					<span class="col-xs-8 col-xs-offset-2 glyphicon glyphicon-envelope" id="email"> 542148187@qq.com</span>
+				</div>
+				<div class="row">
+					<span class="col-xs-2" id="age"></span>
+					<span class="col-xs-8 col-xs-offset-2 glyphicon glyphicon-phone-alt" id="tel"> 14871678237</span>
+				
+				</div>
+				<div class="row">
+					<span class="col-xs-4" id="">身份证</span>
+					<span class="col-xs-8" id="certificateNumber"></span>
+				</div>
+			</div>
+			<div id="account-info" class="right pull-left">
+				<div class="h3">账户信息</div>
+				<div class="row">
+					<span class="col-xs-6">账户余额</span>
+					<span class="col-xs-6"><span id="account"></span>&nbsp;<a id="recharge">充值</a>&nbsp;<a id="withdrawals">提现</a></span>
+				</div>
+				<div class="row">
+					<span class="col-xs-6">总奖励金</span>
+					<span class="col-xs-6" id="sumAccount"></span>
+				</div>
+				<div class="row">
+					<span class="col-xs-6">归还次数</span>
+					<span class="col-xs-6" id="sumTime"></span>
+				</div>
+				<div class="row">
+					<span class="col-xs-6">信用积分</span>
+					<span class="col-xs-6" id="creditScore"></span>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyTimeUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyEnumUtils.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		function parseNull(value,none){
+			if(value == null || value == ''){
+				return none;
+			}else{
+				return value;
+			}
+		}
+		$(document).ready(function() {
+			$("#menu-8").addClass("select")
+			$("#recharge").click(function(){
+				layer.prompt({
+				  formType: 0,
+				  value: '0.00',
+				  title: '请输入充值金额',
+				  area: ['800px', '350px'] //自定义文本域宽高
+				}, function(value, index, elem){
+					 $.ajax({
+						url : "center/recharge.action",
+						data : {/*"id":1,*/"money":value,"type":0},
+						method:"post",
+						dataType:"json",
+						success : function(result) {
+							if(result.code == '0000'){
+								layer.msg("充值成功")
+								$("#account").html(Number(value) +Number($("#account").html()))
+							}else{
+								layer.msg(result.message)
+							}
+						}
+					})
+				  	layer.close(index);
+				}); 
+			 })
+			$("#withdrawals").click(function(){
+				layer.prompt({
+				  formType: 0,
+				  value: '0.00',
+				  title: '请输入提现金额',
+				  area: ['800px', '350px'] //自定义文本域宽高
+				}, function(value, index, elem){
+					 $.ajax({
+						url : "center/recharge.action",
+						data : {/*"id":1,*/"money":value,"type":1},
+						method:"post",
+						dataType:"json",
+						success : function(result) {
+							if(result.code == '0000'){
+								layer.msg("提现成功")
+								$("#account").html(Number($("#account").html()) - Number(value))
+							}else{
+								layer.msg(result.message)
+							}
+						}
+					})
+				  	layer.close(index);
+				}); 
+			 })
+			$.ajax({
+				url : "center/init.action",
+				// data : {"id":1},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						console.log(result.data)
+						var map = result.data
+						// 基本信息
+						$("#name").html(map.name)
+						$("#createDate").html(map.createDate)
+						$("#tel").html(map.tel)
+						$("#sex").html(map.sex)
+						$("#age").html(map.age)
+						$("#email").html(map.email)
+						$("#certificateNumber").html(map.certificateNumber)
+						$("#image img").prop("src","img/user/" +map.image)
+						$("#account").html(map.account)
+						$("#sumAccount").html(map.sumAccount)
+						$("#sumTime").html(map.sumTime)
+						$("#creditScore").html(map.creditScore)
+						// 正在认领的证件
+						
+						var claimingNum = map.claimingNum;
+						$("#claiming-num").html(claimingNum)
+						if(claimingNum == 0){
+
+						}else{
+							var claiming = map.claiming
+							var certificate = claiming.certificate
+							$("#ctype").html(getCertificateType(certificate.type))
+							$("#cname").html(certificate.name)
+							$("#cnumber").html(certificate.number)
+							$("#cinfo").html(parseNull(certificate.info))
+							$("#cremark").html(parseNull(certificate.remark))
+							$("#state").html(getSendBackState(claiming.state))
+							$("#type").html(getSendBackType(claiming.type))
+							$("#pickAddr").html(parseNull(claiming.pickAddr))
+							$("#money").html(parseNull(claiming.money))
+							$("#postAddr").html(parseNull(claiming.postAddr))
+							$("#postNumber").html(parseNull(claiming.postNumber))
+							$("#postTel").html(parseNull(claiming.postTel))
+							$("#postName").html(parseNull(claiming.postName))
+							$("#pickName").html(claiming.pick.name)
+							var location = claiming.location
+							if(location != null){
+								$("#school").html(location.schoolName)
+								$("#location").html(location.location)
+							}
+							$("#gmtCreate").html($.myTime.UnixToDate2(claiming.gmtCreate))
+							if(claiming.validDate == -1){
+								$("#validDate").html("永久有效")
+							}else{
+								$("#validDate").html($.myTime.UnixToDate2(claiming.validDate))
+							}
+							
+							
+						}
+						// 正在招领的证件
+						
+						var pickingNum = map.pickingNum;
+						$("#picking-num").html(pickingNum)
+						if(pickingNum == 0){
+
+						}else{
+							var picking = map.picking;
+							var certificate2 = picking.certificate
+							
+							$("#ctype2").html(getCertificateType(certificate2.type))
+							$("#cname2").html(certificate2.name)
+							$("#cnumber2").html(certificate2.number)
+							$("#cinfo2").html(parseNull(certificate2.info))
+							$("#cremark2").html(parseNull(certificate2.remark))
+							$("#state2").html(getSendBackState(picking.state))
+							$("#type2").html(getSendBackType(picking.type))
+							$("#pickAddr2").html(parseNull(picking.pickAddr))
+							$("#money2").html(parseNull(picking.money))
+							$("#postAddr2").html(parseNull(picking.postAddr))
+							$("#postNumber2").html(parseNull(picking.postNumber))
+							$("#postTel2").html(parseNull(picking.postTel))
+							$("#postName2").html(parseNull(picking.postName))
+							$("#pickName2").html(picking.pick.name)
+							var location2 = picking.location
+							if(location2 != null){
+								$("#school2").html(location2.schoolName)
+								$("#location2").html(location2.location)
+							}
+							$("#gmtCreate2").html($.myTime.UnixToDate2(picking.gmtCreate))
+							if(picking.validDate == -1){
+								$("#validDate2").html("永久有效")
+							}else{
+								$("#validDate2").html($.myTime.UnixToDate2(picking.validDate))
+							}
+							
+							
+						}
+						// 已经归还的证件
+						
+						var returnedNum = map.returnedNum;
+						$("#returned-num").html(returnedNum)
+						if(returnedNum == 0){
+
+						}else{
+							var returned = map.returned
+							var certificate3 = returned.certificate
+							
+							$("#ctype3").html(getCertificateType(certificate3.type))
+							$("#cname3").html(certificate3.name)
+							$("#cnumber3").html(certificate3.number)
+							$("#cinfo3").html(parseNull(certificate3.info))
+							$("#cremark3").html(parseNull(certificate3.remark))
+							$("#state3").html(getSendBackState(returned.state))
+							$("#type3").html(getSendBackType(returned.type))
+							$("#pickAddr3").html(parseNull(returned.pickAddr))
+							$("#money3").html(parseNull(returned.money))
+							$("#postAddr3").html(parseNull(returned.postAddr))
+							$("#postNumber3").html(parseNull(returned.postNumber))
+							$("#postTel3").html(parseNull(returned.postTel))
+							$("#postName3").html(parseNull(returned.postName))
+							$("#pickName3").html(returned.pick.name)
+							var location3 = returned.location
+							if(location3 != null){
+								$("#school3").html(location3.schoolName)
+								$("#location3").html(location3.location)
+							}
+							$("#gmtCreate3").html($.myTime.UnixToDate2(returned.gmtCreate))
+							if(returned.validDate == -1){
+								$("#validDate3").html("永久有效")
+							}else{
+								$("#validDate3").html($.myTime.UnixToDate2(returned.validDate))
+							}
+							
+							
+						}
+						// 收到的感谢信
+						var aThanks = map.thanksLetters
+						var thanksLettersNum = aThanks.length;
+						if(thanksLettersNum == 0){
+
+						}else{
+							$("#thanksLetters-num").html(thanksLettersNum)
+							$.each(aThanks,function(i,v){
+								// console.log(v)
+								$("#thanksLetters .row").append('<span class="col-xs-4 text-center">'+$.myTime.UnixToDate2(v.gmtCreate,true)+'</span>'+
+								'<span class="col-xs-7 col-xs-offset-1" id="">收到了来自'+v.sender.name+'的感谢信。</span>')
+							})
+							
+							
+						}
+						
+
+
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+		})
+		//]]>
+	</script>
+</body>
+</html>

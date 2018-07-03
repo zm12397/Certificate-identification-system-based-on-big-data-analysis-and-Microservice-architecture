@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>拾遗-添加用户</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<link th:href="@{css/main.css}" rel="stylesheet"></link>
+<style>
+	
+	#form{/* background-color: #EEEEEE; */padding-top: 15px;padding-bottom: 10px;color: #777777;width:100%;}
+	#form label{font-size:14px;text-align: right;}
+	/* #buttons{margin-top: 20px;}
+	#buttons button{width: 100px;height: 45px;border-radius: 0;color: white;}
+	#buttons button:hover{box-shadow:5px 8px 20px 0 #DFDFDF,-5px 8px 20px 0 #DFDFDF;}
+	#buttons button[type=submit]{background: #0084FF;}
+	#buttons button[type=reset]{background: #43D480;} */
+	#buttons{position: relative;top: 30px;}
+	#buttons button{width: 80px;height: 35px;border-radius: 0;color: white;}
+	#buttons button:hover{box-shadow:5px 8px 20px 0 #DFDFDF,-5px 8px 20px 0 #DFDFDF;}
+	#buttons button[type=submit]{background: #57BAE8;margin-left: 150px;}
+	#buttons button[type=reset]{background: #C0C2C5;margin-left: 30px;}
+	
+	#form div.checkbox label:hover{color: #00BFFF;}
+	#form form{width: 90%;margin:0 auto;background-color: white;padding: 50px 60px;position: relative;left: 15px;border: 1px solid  #e6e6e6;background-size: cover;}
+	/* #form{width:60%;margin-top: 50px;background:transparent;color:#000;margin-bottom: 100px;} */
+	#main #form  .col-sm-5{padding-right: 0;}
+	#main #form .star{text-align: left;padding-left: 5px;color: red;} 
+	#form legend{width: 80%;} 
+	#form form>div{width: 70%;margin:0 auto;}
+</style>	
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div class="page-header">
+		  <h3><a href="user-management">系统管理</a><small>&nbsp;>>&nbsp;添加新用户</small>
+		  <span class=" pull-right"><a id="" class="btn btn-default" href="user-management">用户管理</a></span>
+		  </h3>
+		</div>
+		<div id="form" class="row">
+			<form th:style="'background-image:url(' + @{img/background013.jpg} + ');'"  class="form-horizontial"  onsubmit="return false"  enctype="multipart/form-data">
+				<div id="user">
+					<fieldset>
+						<legend class="h4">&nbsp;基&nbsp;本&nbsp;信&nbsp;息</legend>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="name">
+								姓名：
+							</label>
+							<div class="col-sm-5"><input id="name" name="name" placeholder="请输入姓名" type="text" class="form-control" required = "required"></input>
+							</div>
+							<div class="col-sm-4 star" >*<span id="name-info" class="info"></span></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="username">
+								用户名：
+							</label>
+							<div class="col-sm-5"><input id="username" name="username" placeholder="请输入用户名" type="text" class="form-control" required = "required"></input>
+							</div>
+							<div class="col-sm-4 star" >*<span id="username-info" class="info"></span></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="password">
+								密码：
+							</label>
+							<div class="col-sm-5"><input id="password" name="password" placeholder="请输入密码" type="password" class="form-control" required = "required"></input>
+							</div>
+							<div class="col-sm-4 star" >*<span id="password-info" class="info"></span></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="repasswd">
+								确认密码：
+							</label>
+							<div class="col-sm-5"><input id="repasswd" name="repasswd" placeholder="请输入密码" type="password" class="form-control" required = "required"></input>
+							</div>
+							<div class="col-sm-4 star" >*<span id="repasswd-info" class="info"></span></div>
+						</div>
+						
+					</fieldset>
+				</div>	
+				<div id="other">
+					<fieldset>
+						<legend class="h4">&nbsp;其&nbsp;他&nbsp;信&nbsp;息</legend>
+						
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="certificateNumber">
+								身份证号：
+							</label>
+							<div class="col-sm-5"><input id="certificateNumber" name="certificateNumber" placeholder="请输入身份证号" type="text" class="form-control" required = "required"></input><span class="verification" id="validate-password"></span>
+							</div>
+							<div class="col-sm-4 star" >*<span id="certificate-info" class="info"></span></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="email">
+								联系邮箱：
+							</label>
+							<div class="col-sm-5"><input id="email" name="email" placeholder="请输入联系邮箱" type="text" class="form-control" required = "required"></input><span class="verification" id="validate-password"></span>
+							</div>
+							<div class="col-sm-4 star" >*<span id="email-info" class="info"></span></div>
+						</div>
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="tel">
+								手机号码：
+							</label>
+							<div class="col-sm-5"><input id="tel" name="tel" placeholder="请输入手机号码" type="text" class="form-control"></input><span class="verification" id="validate-password"></span>
+							</div>
+							<div class="col-sm-4 star" ><span class="info"></span></div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="sex">
+								性别：
+							</label>
+							<div class="col-sm-5">
+								<select id="sex" name="sex" class="form-control">
+									<option value="0" selected = "selected">男</option>
+									<option value="1">女</option>
+								</select>
+							</div>
+							<div class="col-sm-4 star" ><span class="info"></span></div>
+						</div>
+						
+						<div class="form-group row">
+							<label class="col-sm-3 control-label" for="file">
+								头像：
+							</label>
+							<div class="col-sm-5"><input id="file" name="file" type="file" /><input type="hidden" id="img" name="img" />
+							</div>
+							<div class="col-sm-4 star" ><span class="info"></span></div>
+						</div>
+					</fieldset>
+				</div>
+				<div id="buttons" class="row" >
+					<button id="add" class="btn btn-default" type="submit">提交</button>
+					<button class="btn btn-default" type="reset">重置</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script th:src="@{js/ajaxfileupload.js}" src="../js/ajaxfileupload.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+			$(document).ready(function() {
+				$("#menu-9").addClass("select")
+				$("#file").change(function(){
+					var fileId = [ 'file' ];
+					var _this = this;
+					$.ajaxFileUpload({
+						type : 'post',
+						dataType : 'json',
+						url : "file/head/upload.action",
+						secureuri : false,
+						fileElementId : fileId,
+						success : function(result) {
+							console.log(result)
+							if(result.code == "0000"){
+								$("#img").val(result.data.id);
+								layer.msg("头像上传成功")
+								
+							}else{
+								layer.msg(result.message)
+							}
+							
+						}
+						
+					});
+				});
+				$("#add").click(function(){
+					if($("#username-info").html()=="用户名已存在"){
+						layer.msg("用户名已经存在")
+						$("#username").focus();
+					}else if($("#validate-password").html()=="两次密码不一致"){
+						layer.msg("两次密码不一致")
+						$("#repasswd").focus();
+					}else{
+						if($("#username").val() == ''){
+							layer.msg("请输入用户名")
+							$("#username").focus();
+						}else if($("#name").val() == ''){
+							layer.msg("请输入姓名")
+							$("#name").focus();
+						}else if($("#certificateNumber").val() == ''){
+							layer.msg("请输入身份证号")
+							$("#certificateNumber").focus();
+						}else if($("#email").val() == ''){
+							layer.msg("请输入邮箱地址")
+							$("#email").focus();
+						}else{
+							var objData = {"name":$("#name").val(),"username":$("#username").val(),"password":$("#password").val(),
+									"certificateNumber":$("#certificateNumber").val(),"email":$("#email").val(),"tel":$("#tel").val(),
+									"sex":$("#sex").val(),"img":$("#img").val()}
+							$.ajax({
+								url : "manage/user/add.action",
+								data : objData,
+								method:"post",
+								dataType:"json",
+								success : function(result) {
+									layer.msg(result.message)
+								}
+							})	
+						}
+						
+					}
+					
+					
+				})
+				$("#username").blur(function(){
+					$.ajax({
+						url : "register/validate.action",
+						data : {"username":$("#username").val()},
+						method:"post",
+						dataType:"json",
+						success : function(result) {
+							$("#username-info").html(result.message)
+						}
+					})
+				})
+				$("#repasswd").blur(function(){
+					if($("#password").val() != $("#repasswd").val()){
+						$("#repasswd-info").html("两次密码不一致")
+					}else{
+						$("#repasswd-info").html("")
+					}
+				})
+})
+		//]]>
+	</script>
+</body>
+</html>

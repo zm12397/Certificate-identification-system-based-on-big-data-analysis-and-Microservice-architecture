@@ -1,0 +1,170 @@
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>登录</title>
+<meta name="viewport" content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+<style>
+	#main{width: 100%;margin: 0;padding: 0;}
+	#top{width: 100%;height: 60px;background-color: #30A9B2;color: white;margin: 0;}
+	#top #main-title{height: 25px;margin-top: 17px;font-size: 20px;line-height: 25px;}
+	#top #small-title{height: 20px;line-height: 20px;margin-top: 20px;font-size: 14px;}
+	#top #right-title{height: 20px;line-height: 20px;margin-top: 20px;color: white;font-size: 14px;}
+	#top #right-title a{color: white;font-size: 14px;}
+	#top #right-title a:hover{text-decoration:none;color: white;}
+	#step{height: 80px;background-color: #F5F5F5;width: 100%;margin:0;}
+	#step #steps{min-width: 990px;}
+	#step #steps .mybadge{width:30px;height:30px;margin: 15px 12px 5px 12px;color: white;
+		text-align: center;line-height: 30px;font-weight: bold;font-size:14px;background: #DADADA;
+		border-radius: 50%;//圆角百分比 }
+	#step #steps .mybadge.active{background-color: #1E8EC5;}
+	#step #steps .step-title{font-size: 14px;color: rgb(165, 165, 165);font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti;font-weight: 700;}
+	#step #steps .del{width: 220px;height: 70px;line-height: 70px;}
+	#step #steps i{float: left;width: 220px;height: 2px;margin-top: 30px;vertical-align: middle;background-color: #ededed;}
+	#step #steps i.active{background-image: url(img/common.png);background-position: 0 -392px;background-repeat: no-repeat;}
+	#content form{width: 300px;margin:50px auto;padding-top: 70px;}
+	#content form label{color: #4C4C4C;display: none;}
+	#content #submit{width: 100px;margin:20px 100px;color: white;background-color:#1E8EC5; }
+	#content #validateImg{margin-top: 20px;}
+</style>
+<style>
+
+</style>
+</head>
+<body>
+<div id="main" class="container">
+	<div id="top" class="row">
+		<div class="col-xs-8 col-xs-offset-2">
+			<div id="main-title" class="pull-left">SY安全中心</div>
+			<div id="small-title" class="pull-left">&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;找回密码</div>
+		</div>
+		<div class="col-xs-2">
+			<div id="right-title">
+				|&nbsp;&nbsp;&nbsp;&nbsp;<a href="login">登录</a>
+			</div>
+		</div>
+	</div>
+	<div id="step" class="row">
+		<div id="steps" class="col-xs-8 col-xs-offset-2">
+			<div class="pull-left">
+				<div class="mybadge active">1</div>
+				<div class="step-title">填写账号</div>
+			</div>
+			<div class="pull-left del"><i class="active"></i></div>
+			<div class="pull-left">
+				<div class="mybadge">2</div>
+				<div class="step-title">身份验证</div>
+			</div>
+			<div class="pull-left del"><i></i></div>
+			<div class="pull-left">
+				<div class="mybadge">3</div>
+				<div class="step-title">设新密码</div>
+			</div>
+			<div class="pull-left del"><i></i></div>
+			<div class="pull-left">
+				<div class="mybadge">4</div>
+				<div class="step-title">操作完成</div>
+			</div>
+		</div>
+	</div>
+	<div id="content">
+		<form class="form-horizontal" onsubmit="return false">
+			<div>
+				<label id="l-uname" for="uname">用户名：</label>
+				<input id="uname" type="text" placeholder="用户名" class="form-control" name="username"></input>
+				<br></br>
+				
+				<!-- <div id="pfather">
+					<label id="l-password" for="password">验证码</label>
+					<input id="password" type="password" placeholder="验证码" class="form-control" name="password"><a id="forget" href="forget">忘记密码？</a></input>
+				</div>
+				<br></br> -->
+				<div id="vc" class="row">
+					
+					<div class="col-xs-5">
+						<label id="l-validate" for="validate">验证码：</label><br />
+						<input id="validate" name="validateCode"  type="text" placeholder="验证码" class="form-control" />
+					</div>
+					<div class="col-xs-7">
+						<img src="" id="validateImg" alt="验证码" />
+					</div>
+				</div>
+				<button id="submit" class="btn">提交</button>
+			</div>
+
+		</form>
+	</div>
+</div>
+	
+	
+	<script th:src="@{js/jquery.min.js}"></script>
+	<script th:src="@{layer/layer.js}"></script>
+	<script th:src="@{js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		
+		$(document).ready(function() {
+			/*$("#validateImg").prop("src",'?time='+new Date().getTime())*/
+			var code = "";
+			validate();
+			$("#uname").focus(function(){
+				$("#l-uname").css('display','inline-block')
+			}).blur(function(){
+				$("#l-uname").css('display','none')
+			})
+			$("#submit").click(function(){
+				if(code == $("#validate").val().toUpperCase()){
+
+				}else{
+					layer.msg("验证码不正确，请重新填写")
+					$("#validate").val("").focus();
+					return;
+				}
+				$.ajax({
+					url : "login/forget.action",
+					data:{"username":$("#uname").val()},
+					method:"post",
+					dataType:"json",
+					success : function(result) {
+						
+						if(result.code == "0000" && result.message != "用户名不存在"){
+							layer.msg("账号提交成功，正在进入下一步。。。",function(){
+								window.location.href="forget-validate?username=" + $("#uname").val() + "&email=" + result.message; 
+							})
+						}else{
+							layer.msg(result.message)
+						}
+					}
+				})
+			})
+			$("#validate").focus(function(){
+				$("#l-validate").css('display','inline-block')
+			}).blur(function(){
+				$("#l-validate").css('display','none')
+				
+			})
+			$("#validateImg").click(function(){
+				validate();
+			})
+			
+			function validate(){
+				$.ajax({
+					url : "login/validate.action",
+					method:"get",
+					dataType:"json",
+					success : function(result) {
+						if(result.code == "0000"){
+							// console.log(result.data)
+							$("#validateImg").prop("src",result.data.file)
+							code = result.data.code;
+						}
+					}
+				})
+			}
+		})
+		//]]>
+	</script>
+</body>
+</html>

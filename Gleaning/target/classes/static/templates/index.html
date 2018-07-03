@@ -1,0 +1,333 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>主页</title>
+<meta name="viewport"
+	content="width=divice-width,intital-scale=1,maximum-scale=1,user-scalable=no"></meta>
+<meta charset="utf-8"></meta>
+<!-- <link th:href="@{css/bootstrap.min.css}" rel="stylesheet"></link>
+	<link th:href="@{css/.css}" rel="stylesheet"></link> -->
+<link href="../css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}"
+	rel="stylesheet"></link>
+<style>
+	#main{width: 100%;margin-top: 51px;}
+	#goods,#thanks{border-bottom: 1px solid #E1E4E6;height: 550px;margin-bottom: 0;}
+	#banner{border: 1px solid #E1E4E6;height: 550px; }
+	#banner #mycarousel{width: 100%;}
+	#banner #fill{width: 100%;height: 45px;}
+	/* #banner #mycarousel ol.carousel-indicators{margin-top: 25px;}
+	#banner #mycarousel .carousel-inner{height: 500px;margin-top: 25px;} */
+	/* #main .row>div{border: 1px solid red;height: 550px;} */
+	#main #goods>.panel-heading{text-align: center;padding: 15px 10px;background-color: white}
+	#main #goods>.panel-body{text-align: center;padding-left: 10px;padding-right:10px; }
+	#main #goods>.panel-body .name{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+	/*#main #goods .panel-body .badge{background-color: red;}*/
+	#main #thanks{overflow: hidden;}
+	#main #thanks>.panel-heading{text-align: center;padding: 15px 10px;background-color: white}
+	#main #thanks>.panel-body{text-align: center;padding-left: 10px;padding-right:10px; }
+	#main #thanks>.panel-body .thanks-content{text-align: left;color: #3E4142;background-color: #F8F8F8;/* background-color: #EEEEEE; */padding:5px; 10px;margin-bottom:10px; }
+	#main #chart-row div#places{height: 500px;min-width: 450px;}
+	#main #palace-content{height: 500px;border-left: 1px solid #E1E4E6;line-height: 35px;padding: 50px 50px;}
+	
+</style>
+</head>
+<body>
+	<!--头部开始-->
+
+	<div th:replace="head"></div>
+	<!--头部结束-->
+	
+	<div id="main" class="container">
+		<div class="row">
+			<div id="goods" class="col-sm-3 panel panel-default">
+				<div class="panel-heading">好人榜</div>
+				<div class="panel-body">
+					<ul id="goods-list" class="list-group">
+						<li class="list-group-item row text-info">
+							<span class="name col-sm-5">姓名</span>
+						  	<span class="score col-sm-4">归还次数</span>
+						  	<span class="col-sm-3">排名</span>
+						  </li>
+						  <!-- <li class="list-group-item row">
+						  							<span class="name col-sm-5">Cras justo odiowwwwwwwwwwwww</span>
+						  	<span class="score col-sm-4">72</span>
+						  	<span class="label label-danger col-sm-3">1</span>
+						  </li> -->
+						
+					</ul>
+				</div>
+			</div>
+			<div id="banner" class="col-sm-6">
+				<div id="fill"></div>
+				<div id="mycarousel" class="carousel slide" data-ride="carousel">
+					  <!-- Indicators -->
+					  <ol class="carousel-indicators">
+					    <li data-target="#mycarousel" data-slide-to="0" class="active"></li>
+					    <li data-target="#mycarousel" data-slide-to="1"></li>
+					    <li data-target="#mycarousel" data-slide-to="2"></li>
+					  </ol>
+
+					  <!-- Wrapper for slides -->
+					  <div class="carousel-inner" role="listbox">
+					    <div class="item active">
+					      <img src="img/banner02.jpg" alt="..." />
+					      <div class="carousel-caption">
+					        	
+					      </div>
+					    </div>
+					    <div class="item">
+					      <img src="img/banner03.jpg" alt="..." />
+					      <div class="carousel-caption">
+					        
+					      </div>
+					    </div>
+					    <div class="item">
+					      <img src="img/banner04.jpg" alt="..." />
+					      <div class="carousel-caption">
+					        
+					      </div>
+					    </div>
+					  </div>
+
+					  <!-- Controls -->
+					  <a class="left carousel-control" href="#mycarousel" role="button" data-slide="prev">
+					    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					    <span class="sr-only">Previous</span>
+					  </a>
+					  <a class="right carousel-control" href="#mycarousel" role="button" data-slide="next">
+					    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					    <span class="sr-only">Next</span>
+					  </a>
+					</div>
+			</div>
+			<div id="thanks" class="col-sm-3 panel panel-default">
+				<div class="panel-heading">感谢信</div>
+				<div id="thanks-list" class="panel-body">
+					<!-- <div class="row thanks-content text-info">
+						<span class="col-sm-4">用户<span class="rc-name">张一</span></span><span class="col-sm-8">2018年04月15日 17:40</span>
+						<span class="col-sm-12">成功归还了证件，并收到来自对方的感谢信。</span>
+					</div> -->
+					
+				</div>
+			</div>
+		</div>
+		<div id="chart-row" class="row">
+
+			<!-- <div id="places">
+				
+			</div> -->
+			<div id="places" class="col-sm-8 col-sm-offset-1"></div>
+			<div id="palace-content" class="col-sm-3 text-info">
+				<div class="h4 text-center">友情提示</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;根据本系统的大数据分析，可以得到最容易丢失证件的一些地点，这些地点大多具备以下几个特征：人员密集，人员流动性大，属于娱乐性质的场所。
+				<br />&nbsp;&nbsp;&nbsp;&nbsp;因此，希望大家在前去这些场所的时候一定妥善保管自己的证件等物品，否则一旦丢失将会给自己的工作、学习带来诸多不便。
+			</div>
+		</div>
+		<div id="map-row" class="row">
+			
+			
+		</div>
+	</div>
+	<!--主要内容结束-->
+	<script th:src="@{js/jquery.min.js}" src="../js/jquery.min.js"></script>
+	<script th:src="@{js/bootstrap.min.js}" src="../js/bootstrap.min.js"></script>
+	<script type="text/javascript" th:src="@{layer/layer.js}"></script>
+	<script type="text/javascript" th:src="@{js/MyTimeUtils.js}"></script>
+	<script type="text/javascript" th:src="@{js/echarts.js}"></script>
+	<script type="text/javascript" th:src="@{js/macarons.js}"></script>
+	<script type="text/javascript">
+		//<![CDATA[
+		$(document).ready(function() {
+			$("#menu-1").addClass("select")
+			var myChart = echarts.init(document.getElementById('places'),e_macarons); 
+			$.ajax({
+				url : "anysis/places.action",
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						console.log(result.data)
+						var aList = result.data.lines
+						var data = []
+						var seriesData = []
+						var count = result.data.count
+						$.each(aList, function(i,val){
+						 	var aStr = val.split("\t")
+						 	var v = parseInt(aStr[1])
+							data[i] = aStr[0]
+							seriesData[i] = {
+								value:v, 
+								name:aStr[0]
+							}
+						 }); 
+						// console.log(data)
+						// console.log(seriesData)
+						var option = {
+						    title : {
+						        text: '最容易丢失证件的10个地点',
+						        subtext: '丢失概率',
+						        x:'center'
+						    },tooltip: {
+						        trigger: 'item',
+						        formatter:function(params){
+					                    	return params.seriesName+'<br/>'+params.name+': '+params.value+' ('+(params.value*100/count).toFixed(2)+'%)'
+					                    },
+						        // formatter: "{a} <br/>{b}: {c} ({d}%)"
+						    },
+						    legend: {
+						        orient: 'vertical',
+						        x: 'left',
+						        data:data
+						    },
+						    toolbox: {
+						        show : true,
+						        feature : {
+						            mark : {show: true},
+						            dataView : {show: true, readOnly: false},
+						            magicType : {
+						                show: true, 
+						                type: ['pie', 'funnel'],
+						                option: {
+						                    funnel: {
+						                        x: '25%',
+						                        width: '50%',
+						                        funnelAlign: 'center',
+						                        max: 1548
+						                    }
+						                }
+						            },
+						            restore : {show: true},
+						            saveAsImage : {show: true}
+						        }
+						    },
+						    series: [
+						        {
+						            name:'证件丢失概率',
+						            type:'pie',
+						            radius: ['40%', '55%'],
+						            label: {
+						                normal: {
+						                    formatter:function(params){
+						                    	return '{a|'+params.seriesName+'}{abg|}\n{hr|}\n  {b|'+params.name+'：}'+params.value+'  '+(params.value*100/count).toFixed(2)+'%  '
+						                    },
+						                    /*formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{c}/'+count+'%}  ',*/
+						                    backgroundColor: 'white',
+						                    borderColor: '#aaa',
+						                    borderWidth: 1,
+						                    borderRadius: 4,
+						                    // shadowBlur:3,
+						                    // shadowOffsetX: 2,
+						                    // shadowOffsetY: 2,
+						                    // shadowColor: '#999',
+						                    // padding: [0, 7],
+						                    rich: {
+						                        a: {
+						                            color: '#999',
+						                            lineHeight: 22,
+						                            align: 'center'
+						                        },
+						                        // abg: {
+						                        //     backgroundColor: '#333',
+						                        //     width: '100%',
+						                        //     align: 'right',
+						                        //     height: 22,
+						                        //     borderRadius: [4, 4, 0, 0]
+						                        // },
+						                        hr: {
+						                            borderColor: '#aaa',
+						                            width: '100%',
+						                            borderWidth: 0.5,
+						                            height: 0
+						                        },
+						                        b: {
+						                            fontSize: 16,
+						                            lineHeight: 33
+						                        },
+						                        per: {
+						                            color: '#eee',
+						                            backgroundColor: '#334455',
+						                            padding: [2, 4],
+						                            borderRadius: 2
+						                        }
+						                    }
+						                }
+						            },
+						            data:seriesData
+						        }
+						    ]
+						};
+		
+                    
+						// console.log(option)
+						myChart.setOption(option);                     
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+			$.ajax({
+				url : "good/top.action",
+				data : {"top":10},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						// console.log(result.data)
+						var aUser = result.data.content
+						var j = 1;
+						for(var i in aUser){
+							$("#goods-list").append('<li class="list-group-item row"><span class="name col-sm-5">'
+								+ aUser[i].name + '</span><span class="score col-sm-4">' + aUser[i].sumTime + 
+								'</span><span id="range-' + j +'"  class="label label-info col-sm-3">' + j +'</span></li>')
+							j++;
+						}
+						$("#range-1").removeClass("label-info").addClass("label-danger");
+						$("#range-2").removeClass("label-info").addClass("label-success");
+						$("#range-3").removeClass("label-info").addClass("label-primary");
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+			$.ajax({
+				url : "thank/new.action",
+				data : {"news":8},
+				method:"get",
+				dataType:"json",
+				success : function(result) {
+					if(result.code == "0000"){
+						console.log(result.data)
+						var aThanks = result.data.content;
+						for(var i in aThanks){
+							$("#thanks-list").append('<div class="row thanks-content text-info"><span class="col-sm-6">用户<span class="rc-name">'
+								+ aThanks[i].receiver.name + '</span></span><span class="col-sm-6">于'+ $.myTime.UnixToDate(aThanks[i].gmtCreate,true)
+								 +'</span><span class="col-sm-12">成功归还证件并收到来自对方的感谢信。</span></div>')
+							
+						}
+						/*var aUser = result.data.content
+						var j = 1;
+						for(var i in aUser){
+							$("#goods-list").append('<li class="list-group-item row"><span class="name col-sm-5">'
+								+ aUser[i].name + '</span><span class="score col-sm-4">' + aUser[i].sumTime + 
+								'</span><span id="range-' + j +'"  class="label label-info col-sm-3">' + j +'</span></li>')
+							j++;
+						}
+						$("#range-1").removeClass("label-info").addClass("label-danger");
+						$("#range-2").removeClass("label-info").addClass("label-success");
+						$("#range-3").removeClass("label-info").addClass("label-primary");*/
+					}else{
+						layer.msg(result.message)
+					}
+					
+				}
+			})
+		})
+		//]]>
+	</script>
+</body>
+</html>
