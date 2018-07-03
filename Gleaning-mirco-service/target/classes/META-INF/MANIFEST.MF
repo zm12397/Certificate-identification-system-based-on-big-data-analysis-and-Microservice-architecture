@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: Gleaning-mirco-service
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: zm
+Implementation-Vendor-Id: com.zfm.mirco.gleaning
+Build-Jdk: 1.8.0_101
+Implementation-URL: http://projects.spring.io/spring-boot/Gleaning-mir
+ co-service/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+
