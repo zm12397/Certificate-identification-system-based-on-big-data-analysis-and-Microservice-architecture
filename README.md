@@ -8,13 +8,13 @@
 1.系统架构如下所示：
 
 ![拾遗-系统架构图2.0](
-        hello-world/拾遗-系统架构图2.0.jpg
+     https://raw.githubusercontent.com/zm12397/hello-world/master/%E6%8B%BE%E9%81%97-%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E5%9B%BE2.0.jpg
      )
 
 2.数据可视化：
 
-下图为使用K-mean聚类算法，结合MapReduce计算框架得出的聚类结果，在Map上可以看到国内的聚类中心： ![数据中心]( hello-world/数据中心.png)
+下图为使用K-mean聚类算法，结合MapReduce计算框架得出的聚类结果，在Map上可以看到国内的聚类中心： ![数据中心]( https://raw.githubusercontent.com/zm12397/hello-world/master/%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83.png)
 
  下图为使用MapReduce计算框架对丢失地点文本分析后得到的地点信息：
 
-![数据可视化]( hello-world/数据可视化.png) 
+![数据可视化]( https://raw.githubusercontent.com/zm12397/hello-world/master/%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96.png) 
